@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block title %}Список документов{% endblock %}
+
+{% block content %}
+
+<!-- Form for adding a new document -->
+<div class="form-container">
+
+    <form action="{{ url_for('add_doc') }}" method="post" class="add-form" enctype="multipart/form-data">
+
+        <div class="mb-1">
+            <label class="form-label"><strong>Добавить новый документ</strong></label>
+        </div>
+
+        <div class="input-group">
+            <input type="file" name="file" class="form-control" id="inputGroupFile04"
+                   aria-describedby="inputGroupFileAddon04"
+                   aria-label="Upload" required>
+            <button class="btn btn-info" type="submit" id="inputGroupFileAddon04">Загрузить</button>
+        </div>
+
+    </form>
+</div>
+
+
+<!-- Documents table -->
+<div class="table-container table-responsive">
+
+    <table class="table table-bordered table-info table-hover">
+
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Название документа</th>
+            <th scope="col">Список колонок</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        {% for i in range(docs | length) %}
+        <tr>
+            <th scope="row">{{ i + 1 }}</th>
+            <td>
+                <a href="{{ url_for('one_doc', doc_name=docs[i]['doc_name']) }}">
+                    {{ docs[i]['doc_name'] }}
+                </a>
+            </td>
+            <td>
+                {% for col in docs[i]['columns'] %}
+                <small>{{ col }},&nbsp;</small>
+                {% endfor %}
+            </td>
+        </tr>
+        {% endfor %}
+
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

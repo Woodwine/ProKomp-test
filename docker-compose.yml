@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+  mongodb:
+    image: mongo:6.0.6
+    restart: always
+    ports:
+      - 27017:27017
+    volumes:
+      - mongo:/data/db
+
+  python-container:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - DB_HOST=mongodb
+      - DB_PORT=27017
+      - DB_NAME=prok_test
+    restart: always
+    ports:
+      - 8000:8000
+    depends_on:
+      - mongodb
+
+volumes:
+  mongo:

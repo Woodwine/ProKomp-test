@@ -1,0 +1,128 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ doc_info.doc_name }}{% endblock %}
+
+{% block content %}
+
+<!-- Document name -->
+<h1 class="doc-title">
+    {{ doc_info.doc_name }}
+</h1>
+
+
+<!-- Deletion modal -->
+<div class="modal" id="modal">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title">Удаление</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true"></span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <p>Вы точно хотите удалить данный документ?</p>
+            </div>
+
+            <div class="modal-footer">
+                <form method="post" action="{{ url_for('delete_doc', doc_name=doc_info.doc_name) }}">
+                    <button type="submit" class="btn btn-outline-danger" name='action' value="delete">
+                        <b>Удалить</b></button>
+                </form>
+
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Закрыть</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Filter form -->
+<div class="filter-form">
+    <form method="get" action="{{ url_for('one_doc', doc_name=doc_info.doc_name) }}" id="filterForm">
+
+        <div class="form-col">
+            <div class="mb-1">
+                <label class="form-label"><strong>Сортировать по:</strong></label>
+            </div>
+
+            {% for item in doc_info.columns %}
+            <div class="input-group input-group-sm mb-2">
+                <label class="input-group-text">{{ item }}</label>
+                <select class="form-select" name="sort">
+                    <option selected value="">Сортировать по...</option>
+                    <option value="{{ item }}">по возрастанию</option>
+                    <option value="-{{ item }}">по убыванию</option>
+                </select>
+            </div>
+            {% endfor %}
+
+        </div>
+
+        <div class="form-col">
+            <div class="mb-1">
+                <label class="form-label"><strong>Поиск:</strong></label>
+            </div>
+
+            {% for item in doc_info.columns %}
+            <div class="input-group input-group-sm mb-2">
+                <span class="input-group-text">{{ item }}</span>
+                <input type="text" class="form-control" name="{{ item }}" aria-describedby="basic-addon3">
+            </div>
+            {% endfor %}
+
+        </div>
+
+        <div class="form-col">
+            <div class="mb-1">
+                <label class="form-label"><strong>Лимит записей:</strong></label>
+            </div>
+
+            <div class="input-group input-group-sm mb-3">
+                <span class="input-group-text">Лимит</span>
+                <input type="text" class="form-control" name="limit" aria-describedby="basic-addon3" value="{{ limit }}">
+            </div>
+
+            <button class="btn btn-info" type="submit" onclick="onLoad();">Отправить</button>
+        </div>
+
+    </form>
+</div>
+
+<!-- Deletion button -->
+<div class="form-container-delete">
+    <a class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modal" href='#'>
+        Удалить {{ doc_info.doc_name }}
+    </a>
+</div>
+
+<!-- Document table -->
+<div class="table-container table-responsive">
+    <table class="table table-info table-hover table-bordered">
+
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            {% for col in doc_info.columns %}
+            <th scope="col">{{ col }}</th>
+            {% endfor %}
+        </tr>
+        </thead>
+
+        <tbody>
+        {% for i in range(doc | length) %}
+        <tr>
+            <th scope="row">{{ i + 1 }}</th>
+            {% for col in doc_info.columns%}
+            <td>{{ doc[i][col] }}</td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+
+        </tbody>
+    </table>
+</div>
+
+
+{% endblock %}

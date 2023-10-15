@@ -1,0 +1,103 @@
+:root {
+    --light-gray: #f2f4f5;
+}
+
+html {
+    font-weight: normal;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+a {
+    text-decoration: none;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.main-section {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    flex-grow: 1;
+    background-color: var(--light-gray);
+}
+
+.content-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 50px;
+}
+
+.navbar {
+    margin-bottom: 30px;
+}
+
+.navbar-brand {
+    font-size: 22px;
+    margin: 0 20px;
+}
+
+.form-container {
+    margin-bottom: 40px;
+}
+
+.form-container form {
+    max-width: 800px;
+    min-width: 95%;
+    margin: 5px 40px;
+    display: inline-block;
+}
+
+.form-container-delete{
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+.form-container-delete a {
+    max-width: 180px;
+    min-width: 15%;
+    margin: 5px 40px;
+    display: inline-block;
+}
+
+.form-container label {
+    font-size: 18px;
+}
+
+.table-container {
+    width: 95%;
+}
+
+#filterForm {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.form-col {
+    margin: 0 30px;
+}
+
+.input-group label, span {
+    width: 50%;
+}
+
+.alert-dismissible {
+    margin-bottom: 40px;
+}
+
+.doc-title {
+    margin-bottom: 50px;
+}
+
